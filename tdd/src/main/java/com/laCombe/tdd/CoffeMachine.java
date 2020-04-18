@@ -4,36 +4,34 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 
 /**
- * Hello world!
+ * Coffe Machine
  *
  */
 public class CoffeMachine {
 	
-	public DrinksType drinksType;
-	public final int MAX = 2;
-	public String stick = "";
-	public BigDecimal rest;
+	private final int MAX = 2;
+	private String stick = "";
+	private BigDecimal rest;
 	
 	public CoffeMachine() {
 		
 	}
 	
 	
-	public String drinkMakerProtocol(DrinksType dt, int nbSugar, double money) {
+	public String drinkMakerProtocol(DrinksType dt, int nbSugar, double money, boolean extraHot) {
 		
-		if(money >= dt.amount) {
-			String sugar = containSugar(nbSugar);
-			return dt.value + ":" + sugar + ":" + stick ;
-		}
-			
+		String message = "";
+		
+		if(money >= dt.amount && extraHot) 
+			message = messagetoCustomer(dt,nbSugar,extraHot);
+		else if (money >= dt.amount && !extraHot)
+			message = messagetoCustomer(dt,nbSugar,extraHot);
 		else {
 			rest = calculationRest(dt, money);
-			return "M:You need to add: " + rest + " euro";
+			message = "M:You need to add: " + rest + " euro";
 		}
-			
+		return message;
 	}
-	
-	
 	
 	private int touillette(int nbSugar) {
 		
@@ -53,10 +51,6 @@ public class CoffeMachine {
 			return "";
 	}
 	
-	private String transformIntInString(int transform) {
-		return String.valueOf(transform);
-	}
-	
 	private BigDecimal calculationRest(DrinksType dt, double money) {
 		
 		MathContext mc = new MathContext(1);
@@ -64,5 +58,18 @@ public class CoffeMachine {
 		rest = rest.subtract(new BigDecimal(money),mc);
 		
 		return rest;
+	}
+	
+	private String messagetoCustomer(DrinksType dt, int nbSugar,boolean extraHot) {
+		String sugar = containSugar(nbSugar);
+		
+		if(extraHot) 
+			 return dt.value + "h:" + sugar + ":" + stick;
+		 else 
+			 return dt.value + ":" + sugar + ":" + stick;
+	}
+	
+	private String transformIntInString(int transform) {
+		return String.valueOf(transform);
 	}
 }
