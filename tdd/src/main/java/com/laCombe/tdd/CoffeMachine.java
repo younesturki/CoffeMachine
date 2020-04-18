@@ -17,21 +17,37 @@ public class CoffeMachine {
 	
 	public String drinkMakerProtocol(DrinksType dt, int nbSugar, boolean messageToCustomer) {
 		
-		touillette(nbSugar);
-		if(!messageToCustomer)
-			return dt.value + ":" + nbSugar + ":" + stick ;
+		if(!messageToCustomer) {
+			
+			String sugar = containSugar(nbSugar);
+			return dt.value + ":" + sugar + ":" + stick ;
+		}
+			
 		else 
 			return "M:message-content";
 	}
 	
 	
 	
-	private void touillette(int nbSugar) {
+	private int touillette(int nbSugar) {
 		
-		if(nbSugar > 0) 
+		if(nbSugar > 0 && nbSugar <= MAX) {
 			stick = "0";
-	 
-		if (nbSugar > MAX) 
+		  }
+		else if (nbSugar > MAX) 
 			nbSugar = MAX;
+		return nbSugar;
+	}
+	
+	private String containSugar(int nbrSugar) {
+		touillette(nbrSugar);
+		if(nbrSugar > 0)
+			return transformIntInString(nbrSugar);
+		else 
+			return "";
+	}
+	
+	private String transformIntInString(int transform) {
+		return String.valueOf(transform);
 	}
 }
