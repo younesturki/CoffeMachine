@@ -22,9 +22,9 @@ public class CoffeMachine {
 		
 		String message = "";
 		
-		if(money >= dt.amount && extraHot) 
+		if(money >= dt.getAmount() && extraHot) 
 			message = messagetoCustomer(dt,nbSugar,extraHot);
-		else if (money >= dt.amount && !extraHot)
+		else if (money >= dt.getAmount() && !extraHot)
 			message = messagetoCustomer(dt,nbSugar,extraHot);
 		else {
 			rest = calculationRest(dt, money);
@@ -54,7 +54,7 @@ public class CoffeMachine {
 	private BigDecimal calculationRest(DrinksType dt, double money) {
 		
 		MathContext mc = new MathContext(1);
-		BigDecimal rest = new BigDecimal(dt.amount);
+		BigDecimal rest = new BigDecimal(dt.getAmount());
 		rest = rest.subtract(new BigDecimal(money),mc);
 		
 		return rest;
@@ -64,9 +64,9 @@ public class CoffeMachine {
 		String sugar = containSugar(nbSugar);
 		
 		if(extraHot) 
-			 return dt.value + "h:" + sugar + ":" + stick;
+			 return dt.getValue() + "h:" + sugar + ":" + stick;
 		 else 
-			 return dt.value + ":" + sugar + ":" + stick;
+			 return dt.getValue() + ":" + sugar + ":" + stick;
 	}
 	
 	private String transformIntInString(int transform) {
